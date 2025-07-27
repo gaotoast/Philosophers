@@ -1,3 +1,5 @@
 philo/philo
 *.o
 .test/
+.vscode/
+*.code-workspace
