@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 16:03:24 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 17:43:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ int	ft_atoi(const char *nptr)
 	}
 	while (*nptr >= '0' && *nptr <= '9')
 	{
+		if (sign == 1 && result > (INT_MAX - (*nptr - '0')) / 10)
+			return ((int)LONG_MAX);
+		else if (sign == -1 && -(result) < (INT_MIN + (*nptr - '0')) / 10)
+			return ((int)LONG_MIN);
 		result = result * 10 + (*nptr - '0');
 		nptr++;
 	}
