@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 15:54:54 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 17:34:54 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	parse_args(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->must_eat_count = ft_atoi(argv[5]);
+	else
+		data->must_eat_count = -1;
 	if (data->n_of_philos < 1 || data->time_to_die < 0 || data->time_to_eat < 0
 		|| data->time_to_sleep < 0 || data->must_eat_count == 0)
 	{
@@ -73,8 +75,8 @@ int	init(t_data *data, int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		write(2,
-			"Usage: ./philo number_of_philosophers time_to_die time_to_eat \
-            time_to_sleep [number_of_times_each_philosopher_must_eat]\n",
+			"Usage: ./philo number_of_philosophers time_to_die time_to_eat "
+			"time_to_sleep [number_of_times_each_philosopher_must_eat]\n",
 			120);
 		return (-1);
 	}
