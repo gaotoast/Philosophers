@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   simulate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 17:13:45 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 15:52:24 by stakada          ###   ########.fr       */
+/*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
+/*   Updated: 2025/07/30 15:53:40 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	simulate(t_data *data)
 {
-	t_data	data;
+	int	i;
 
-	if (init(&data, argc, argv) < 0)
-		return (1);
-	if (simulate(&data) < 0)
-		return (1);
+	i = 0;
+	while (i < data->n_of_philos)
+	{
+		if (pthread_create(&data->philos[i].thread, NULL, philo_routine,
+				(void *)&data->philos[i].id) != 0)
+			return (-1);
+		i++;
+	}
+	i = 0;
+	while (i < data->n_of_philos)
+	{
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
 	return (0);
 }

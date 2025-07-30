@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 17:13:45 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 15:52:24 by stakada          ###   ########.fr       */
+/*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
+/*   Updated: 2025/07/30 14:10:20 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	ft_atoi(const char *nptr)
 {
-	t_data	data;
+	int	sign;
+	int	result;
 
-	if (init(&data, argc, argv) < 0)
-		return (1);
-	if (simulate(&data) < 0)
-		return (1);
-	return (0);
+	sign = 1;
+	result = 0;
+	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
+		nptr++;
+	if (*nptr == '+' || *nptr == '-')
+	{
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
+	}
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		result = result * 10 + (*nptr - '0');
+		nptr++;
+	}
+	return (sign * result);
 }
