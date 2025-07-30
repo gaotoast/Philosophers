@@ -6,20 +6,20 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 17:42:33 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 18:21:55 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include <limits.h>
 
 typedef struct s_data	t_data;
 
@@ -56,5 +56,6 @@ void					*philo_routine(void *arg);
 // utils
 int						ft_atoi(const char *nptr);
 long long				get_time_ms(void);
+void					free_data(t_data *data);
 
 #endif

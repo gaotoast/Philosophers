@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 18:03:55 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 18:19:52 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ static int	init_data(t_data *data, int argc, char **argv)
 	while (i < data->n_of_philos)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) < 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&data->forks[i]);
+			free(data->forks);
 			return (-1);
+		}
 		i++;
 	}
 	return (0);
