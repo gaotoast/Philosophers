@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 14:10:20 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 16:03:24 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,12 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	return (sign * result);
+}
+
+long long	get_time_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

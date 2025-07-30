@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 15:54:03 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 16:08:49 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	long				time_to_eat;
 	long				time_to_sleep;
 	int					must_eat_count;
+	long long			start_time;
 	t_philo				*philos;
 	pthread_mutex_t		*forks;
 }						t_data;
@@ -53,5 +54,6 @@ void					*philo_routine(void *arg);
 
 // utils
 int						ft_atoi(const char *nptr);
+long long				get_time_ms(void);
 
 #endif

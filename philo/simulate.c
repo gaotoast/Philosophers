@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 15:53:40 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 16:08:45 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	simulate(t_data *data)
 {
 	int	i;
 
+	data->start_time = get_time_ms();
 	i = 0;
 	while (i < data->n_of_philos)
 	{
