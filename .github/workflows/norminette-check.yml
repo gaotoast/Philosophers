@@ -2,7 +2,7 @@ name: Norminette Check
 run-name: Norminette check for ${{ github.event.pull_request.head.ref }}
 
 on: 
-  pull-request:
+  pull_request:
     branches:
       - main
 
