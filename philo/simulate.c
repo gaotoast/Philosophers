@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 18:14:10 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 22:15:20 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@ int	simulate(t_data *data)
 	i = 0;
 	while (i < data->n_of_philos)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, philo_routine,
-				(void *)&data->philos[i]) != 0)
-		{
-			while (--i >= 0)
-				pthread_detach(data->philos[i].thread);
+		if (pthread_create(&(data->philos[i].thread), NULL, philo_routine,
+				(void *)&(data->philos[i])) != 0)
 			return (-1);
-		}
 		i++;
 	}
 	i = 0;

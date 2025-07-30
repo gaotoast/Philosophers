@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 18:21:55 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 22:18:26 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_data
 
 // init
 int						init(t_data *data, int argc, char **argv);
+int						parse_args(t_data *data, int argc, char **argv);
 
 // simulate
 int						simulate(t_data *data);
