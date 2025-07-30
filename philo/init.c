@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 18:19:52 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 19:04:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	init_data(t_data *data, int argc, char **argv)
 {
 	int	i;
 
+	memset(data, 0, sizeof(t_data));
 	if (parse_args(data, argc, argv) < 0)
 		return (-1);
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
