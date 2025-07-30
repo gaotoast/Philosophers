@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 17:34:54 by stakada          ###   ########.fr       */
+/*   Updated: 2025/07/30 18:03:55 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static int	init_philos(t_data *data)
 	while (i < data->n_of_philos)
 	{
 		data->philos[i].id = i + 1;
-		data->philos[i].left_fork = NULL;
-		data->philos[i].right_fork = NULL;
+		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_fork = &data->forks[(i + 1) % data->n_of_philos];
 		data->philos[i].data = data;
 		i++;
 	}
