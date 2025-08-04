@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 22:34:03 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/04 12:40:18 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,49 @@ void	print_state(int philo_id, t_data *data, char *msg)
 	pthread_mutex_unlock(&(data->print_mutex));
 }
 
+int	philo_sleep(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->data->monitor_mutex));
+	if (philo->data->is_game_over)
+	{
+		pthread_mutex_unlock(&(philo->data->monitor_mutex));
+		return (-1);
+	}
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
+	print_state(philo->id, philo->data, MSG_SLEEP);
+	usleep(philo->data->time_to_sleep * 1000);
+	return (0);
+}
+
+int	philo_think(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->data->monitor_mutex));
+	if (philo->data->is_game_over)
+	{
+		pthread_mutex_unlock(&(philo->data->monitor_mutex));
+		return (-1);
+	}
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
+	print_state(philo->id, philo->data, MSG_THINK);
+	return (0);
+}
+
+// TODO: philo_eat
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	print_state(philo->id, philo->data, MSG_THINK);
+	pthread_mutex_lock(&(philo->data->monitor_mutex));
+	while (!philo->data->is_game_over)
+	{
+		pthread_mutex_unlock(&(philo->data->monitor_mutex));
+		if (philo_sleep(philo) < 0)
+			return (NULL);
+		if (philo_think(philo) < 0)
+			return (NULL);
+		pthread_mutex_lock(&(philo->data->monitor_mutex));
+	}
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	return (NULL);
 }
