@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 22:34:35 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:23:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	clean_up_data(t_data *data)
 {
 	int	i;
 
-	pthread_mutex_destroy(&(data->print_mutex));
 	if (data->forks)
 	{
 		i = 0;
@@ -63,6 +62,7 @@ void	clean_up_data(t_data *data)
 			i++;
 		}
 		free(data->forks);
+		pthread_mutex_destroy(&(data->print_mutex));
 	}
 	if (data->philos)
 		free(data->philos);

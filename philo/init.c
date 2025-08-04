@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/07/30 22:42:34 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:26:52 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	init_mutexes(t_data *data)
 			while (--i >= 0)
 				pthread_mutex_destroy(&(data->forks[i]));
 			free(data->forks);
+			data->forks = NULL;
 			return (-1);
 		}
 		i++;
