@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/04 12:56:40 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/04 13:45:39 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ void	print_state(int philo_id, t_data *data, char *msg)
 		printf("%lld %d %s\n", timestamp, philo_id, msg);
 	}
 	pthread_mutex_unlock(&(data->print_mutex));
+}
+
+// TODO: take forks
+int	philo_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->data->monitor_mutex));
+	if (philo->data->is_game_over)
+	{
+		pthread_mutex_unlock(&(philo->data->monitor_mutex));
+		return (-1);
+	}
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
+	print_state(philo->id, philo->data, MSG_EAT);
+	ft_usleep(philo->data->time_to_eat);
+	return (0);
 }
 
 int	philo_sleep(t_philo *philo)
@@ -62,6 +77,8 @@ void	*philo_routine(void *arg)
 	while (!philo->data->is_game_over)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
+		if (philo_eat(philo) < 0)
+			return (NULL);
 		if (philo_sleep(philo) < 0)
 			return (NULL);
 		if (philo_think(philo) < 0)
