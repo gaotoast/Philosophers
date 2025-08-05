@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 17:18:08 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:26:40 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	philo_eat(t_philo *philo)
 		return (-1);
 	}
 	pthread_mutex_unlock(&(philo->data->monitor_mutex));
+	philo->last_meal_time = get_time_ms();
 	print_state(philo->id, philo->data, MSG_EAT);
 	ft_usleep(philo->data->time_to_eat);
 	return (0);
@@ -54,7 +55,6 @@ int	philo_think(t_philo *philo)
 	return (0);
 }
 
-// TODO: philo_eat
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
