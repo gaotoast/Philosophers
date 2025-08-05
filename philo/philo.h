@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 18:48:40 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:26:38 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ typedef struct s_philo
 {
 	int					id;
 	pthread_t			thread;
+	pthread_t			monitor_thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
+	long long			last_meal_time;
 	t_data				*data;
 }						t_philo;
 
@@ -64,6 +66,9 @@ void					print_state(int id, t_data *data, char *msg);
 
 // routine
 void					*philo_routine(void *arg);
+
+// monitor
+void					*monitor_routine(void *arg);
 
 // utils
 long					str_to_long(const char *nptr);
