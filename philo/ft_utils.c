@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:48:32 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 18:51:06 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:56:27 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ long	str_to_long(const char *nptr)
 	long	result;
 
 	result = 0;
-	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
-		nptr++;
 	while (*nptr >= '0' && *nptr <= '9')
 	{
 		if (result > (LONG_MAX - (*nptr - '0') / 10))
