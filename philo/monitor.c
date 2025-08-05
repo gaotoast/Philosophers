@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:13:07 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:38:14 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 22:56:30 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int	check_philo_death(t_philo *philo, t_data *data)
 	{
 		if (!data->is_game_over)
 			data->is_game_over = 1;
-		pthread_mutex_lock(&(data->print_mutex));
 		print_state(philo->id, data, MSG_DIED);
-		pthread_mutex_unlock(&(data->print_mutex));
 		return (1);
 	}
 	return (0);
@@ -34,7 +32,6 @@ void	*monitor_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	ft_usleep(1);
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->data->monitor_mutex));
