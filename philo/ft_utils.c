@@ -6,16 +6,16 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:48:32 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/04 18:48:57 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 15:18:06 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+long	ft_atol(const char *nptr)
 {
-	int	sign;
-	int	result;
+	long	sign;
+	long	result;
 
 	sign = 1;
 	result = 0;
