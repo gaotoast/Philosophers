@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:08:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 18:23:01 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:42:53 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static int	is_valid_number(char *str)
 {
 	int	i;
 
+	if (!*str)
+		return (0);
 	i = 0;
 	while (str[i])
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
-			return (0);
-		if (i == 18 && str[i] > '7')
 			return (0);
 		i++;
 	}
@@ -45,7 +45,7 @@ int	check_args(int argc, char **argv)
 	{
 		if (!is_valid_number(argv[i]))
 		{
-			write(STDERR_FILENO, "Error: Invalid argument values\n", 25);
+			write(STDERR_FILENO, "Error: Invalid argument values\n", 31);
 			return (-1);
 		}
 		i++;
