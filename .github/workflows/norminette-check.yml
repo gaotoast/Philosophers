@@ -24,7 +24,7 @@ jobs:
       - name: Run Norminette and save output
         id: run_norminette
         run: norminette > norminette_output.txt
-        continue-on-error: true
+        # continue-on-error: true
 
       - name: Check for Norminette Errors
         if: ${{ failure() }}
