@@ -6,33 +6,23 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/04 12:44:48 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/04 18:49:30 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+void	print_state(int philo_id, t_data *data, char *msg)
 {
-	int	sign;
-	int	result;
+	long long	timestamp;
 
-	sign = 1;
-	result = 0;
-	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
-		nptr++;
-	if (*nptr == '+' || *nptr == '-')
+	pthread_mutex_lock(&(data->print_mutex));
+	if (!data->is_game_over)
 	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
+		timestamp = get_time_ms() - data->start_time;
+		printf("%lld %d %s\n", timestamp, philo_id, msg);
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		result = result * 10 + (*nptr - '0');
-		nptr++;
-	}
-	return (sign * result);
+	pthread_mutex_unlock(&(data->print_mutex));
 }
 
 long long	get_time_ms(void)
@@ -41,11 +31,6 @@ long long	get_time_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-void	ft_usleep(long ms)
-{
-	usleep(ms * 1000);
 }
 
 void	free_data(t_data *data)

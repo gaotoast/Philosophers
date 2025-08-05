@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/04 12:44:58 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 17:47:30 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int					n_of_philos;
+	long				n_of_philos;
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;
-	int					must_eat_count;
+	long				must_eat_count;
 	long long			start_time;
 	int					is_game_over;
 	pthread_mutex_t		print_mutex;
@@ -65,7 +65,7 @@ void					print_state(int id, t_data *data, char *msg);
 void					*philo_routine(void *arg);
 
 // utils
-int						ft_atoi(const char *nptr);
+long					ft_atol(const char *nptr);
 long long				get_time_ms(void);
 void					ft_usleep(long ms);
 void					clean_up_data(t_data *data);
