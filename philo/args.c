@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 20:08:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 18:42:53 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:49:56 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,16 @@ int	check_args(int argc, char **argv)
 
 int	parse_args(t_data *data, int argc, char **argv)
 {
-	data->n_of_philos = ft_atol(argv[1]);
-	data->time_to_die = ft_atol(argv[2]);
-	data->time_to_eat = ft_atol(argv[3]);
-	data->time_to_sleep = ft_atol(argv[4]);
+	data->n_of_philos = str_to_long(argv[1]);
+	data->time_to_die = str_to_long(argv[2]);
+	data->time_to_eat = str_to_long(argv[3]);
+	data->time_to_sleep = str_to_long(argv[4]);
 	if (argc == 6)
-		data->must_eat_count = ft_atol(argv[5]);
+		data->must_eat_count = str_to_long(argv[5]);
 	else
 		data->must_eat_count = -1;
-	if (data->n_of_philos < 1 || data->must_eat_count == 0)
+	if (data->n_of_philos < 1 || data->time_to_die < 0 || data->time_to_eat < 0
+		|| data->time_to_sleep < 0 || data->must_eat_count == 0)
 	{
 		write(STDERR_FILENO, "Error: Invalid argument values\n", 31);
 		return (-1);

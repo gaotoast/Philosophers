@@ -6,33 +6,27 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 18:48:32 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 15:18:06 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:51:06 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *nptr)
+long	str_to_long(const char *nptr)
 {
-	long	sign;
 	long	result;
 
-	sign = 1;
 	result = 0;
 	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
 		nptr++;
-	if (*nptr == '+' || *nptr == '-')
-	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
-	}
 	while (*nptr >= '0' && *nptr <= '9')
 	{
+		if (result > (LONG_MAX - (*nptr - '0') / 10))
+			return (-1);
 		result = result * 10 + (*nptr - '0');
 		nptr++;
 	}
-	return (sign * result);
+	return (result);
 }
 
 void	ft_usleep(long ms)

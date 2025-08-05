@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 17:56:20 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:48:40 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void					print_state(int id, t_data *data, char *msg);
 void					*philo_routine(void *arg);
 
 // utils
-long					ft_atol(const char *nptr);
+long					str_to_long(const char *nptr);
 long long				get_time_ms(void);
 void					ft_usleep(long ms);
 void					clean_up_data(t_data *data);
