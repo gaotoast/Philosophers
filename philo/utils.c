@@ -19,7 +19,7 @@ long	str_to_long(const char *nptr)
 	result = 0;
 	while (*nptr >= '0' && *nptr <= '9')
 	{
-		if (result > (LONG_MAX - (*nptr - '0') / 10))
+		if (result > (LONG_MAX - (*nptr - '0')) / 10)
 			return (-1);
 		result = result * 10 + (*nptr - '0');
 		nptr++;
