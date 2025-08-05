@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:41:23 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 22:59:24 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static int	init_data(t_data *data, int argc, char **argv)
 		return (-1);
 	if (init_mutexes(data) < 0)
 		return (-1);
+	data->is_game_over = 0;
 	return (0);
 }
 
