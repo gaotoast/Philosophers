@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:13:07 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:33:20 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:38:14 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_philo_death(t_philo *philo, t_data *data)
 	long long	current_time;
 
 	current_time = get_time_ms();
-	if ((philo->last_meal_time - current_time) >= data->time_to_die)
+	if ((current_time - philo->last_meal_time) >= data->time_to_die)
 	{
 		if (!data->is_game_over)
 			data->is_game_over = 1;
@@ -39,9 +39,15 @@ void	*monitor_routine(void *arg)
 	{
 		pthread_mutex_lock(&(philo->data->monitor_mutex));
 		if (philo->data->is_game_over)
+		{
+			pthread_mutex_unlock(&(philo->data->monitor_mutex));
 			break ;
+		}
 		if (check_philo_death(philo, philo->data) != 0)
+		{
+			pthread_mutex_unlock(&(philo->data->monitor_mutex));
 			break ;
+		}
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	}
 	return (NULL);

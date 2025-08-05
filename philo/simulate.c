@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:33:11 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:38:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	create_threads(t_data *data, int *i)
 		if (pthread_create(&(data->philos[*i].thread), NULL, philo_routine,
 				(void *)&(data->philos[*i])) != 0)
 		{
-			while (--i >= 0)
+			while (--(*i) >= 0)
 				pthread_detach(data->philos[*i].thread);
 			return (-1);
 		}
@@ -27,7 +27,7 @@ int	create_threads(t_data *data, int *i)
 				monitor_routine, (void *)&(data->philos[*i])) != 0)
 		{
 			pthread_detach(data->philos[*i].thread);
-			while (--i >= 0)
+			while (--(*i) >= 0)
 			{
 				pthread_detach(data->philos[*i].thread);
 				pthread_detach(data->philos[*i].monitor_thread);
