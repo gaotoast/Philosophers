@@ -6,11 +6,26 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/04 18:49:30 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:03:04 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long	str_to_long(const char *nptr)
+{
+	long	result;
+
+	result = 0;
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		if (result > (LONG_MAX - (*nptr - '0')) / 10)
+			return (-1);
+		result = result * 10 + (*nptr - '0');
+		nptr++;
+	}
+	return (result);
+}
 
 void	print_state(int philo_id, t_data *data, char *msg)
 {
@@ -33,28 +48,7 @@ long long	get_time_ms(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	free_data(t_data *data)
+void	ft_usleep(long ms)
 {
-	free(data->forks);
-	free(data->philos);
-}
-
-void	clean_up_data(t_data *data)
-{
-	int	i;
-
-	if (data->forks)
-	{
-		i = 0;
-		while (i < data->n_of_philos)
-		{
-			pthread_mutex_destroy(&(data->forks[i]));
-			i++;
-		}
-		free(data->forks);
-		pthread_mutex_destroy(&(data->print_mutex));
-		pthread_mutex_destroy(&(data->monitor_mutex));
-	}
-	if (data->philos)
-		free(data->philos);
+	usleep(ms * 1000);
 }

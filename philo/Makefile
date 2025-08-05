@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
-SRCS = main.c init.c parse_args.c simulate.c routine.c utils.c ft_utils.c
+SRCS = main.c init.c args.c simulate.c routine.c utils.c clean_up.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

@@ -1,41 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 18:48:32 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 15:18:06 by stakada          ###   ########.fr       */
+/*   Created: 2025/08/05 19:02:24 by stakada           #+#    #+#             */
+/*   Updated: 2025/08/05 19:03:09 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atol(const char *nptr)
+void	free_data(t_data *data)
 {
-	long	sign;
-	long	result;
-
-	sign = 1;
-	result = 0;
-	while (*nptr == ' ' || (*nptr >= '\t' && *nptr <= '\r'))
-		nptr++;
-	if (*nptr == '+' || *nptr == '-')
-	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
-	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		result = result * 10 + (*nptr - '0');
-		nptr++;
-	}
-	return (sign * result);
+	free(data->forks);
+	free(data->philos);
 }
 
-void	ft_usleep(long ms)
+void	clean_up_data(t_data *data)
 {
-	usleep(ms * 1000);
+	int	i;
+
+	if (data->forks)
+	{
+		i = 0;
+		while (i < data->n_of_philos)
+		{
+			pthread_mutex_destroy(&(data->forks[i]));
+			i++;
+		}
+		free(data->forks);
+		pthread_mutex_destroy(&(data->print_mutex));
+		pthread_mutex_destroy(&(data->monitor_mutex));
+	}
+	if (data->philos)
+		free(data->philos);
 }
