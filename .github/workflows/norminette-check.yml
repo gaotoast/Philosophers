@@ -27,6 +27,7 @@ jobs:
           norminette > norminette_output.txt
           if [ $? -ne 0 ]; then
             echo "has_errors=true" >> $GITHUB_OUTPUT
+            exit 1
           else
             echo "has_errors=false" >> $GITHUB_OUTPUT
           fi
