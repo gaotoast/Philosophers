@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:13:07 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 22:56:30 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/05 23:04:37 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	check_philo_death(t_philo *philo, t_data *data)
 	current_time = get_time_ms();
 	if ((current_time - philo->last_meal_time) >= data->time_to_die)
 	{
+		print_state(philo->id, data, MSG_DIED);
 		if (!data->is_game_over)
 			data->is_game_over = 1;
-		print_state(philo->id, data, MSG_DIED);
 		return (1);
 	}
 	return (0);
