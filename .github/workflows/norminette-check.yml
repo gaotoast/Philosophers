@@ -23,22 +23,13 @@ jobs:
 
       - name: Run Norminette and save output
         id: run_norminette
-        run: |
-          norminette > norminette_output.txt
-          if [ $? -ne 0 ]; then
-            echo "has_errors=true" >> $GITHUB_OUTPUT
-            exit 1
-          else
-            echo "has_errors=false" >> $GITHUB_OUTPUT
-          fi
+        run: norminette > norminette_output.txt
         continue-on-error: true
 
-      - name: Display Norminette Output
-        run: cat norminette_output.txt
-
       - name: Check for Norminette Errors
-        if: steps.run_norminette.outputs.has_errors == 'true'
+        if: ${{ failure() }}
         run: |
           echo "::error::Norminette found errors. Please check the output above."
+          cat norminette_output.txt
           exit 1
         continue-on-error: false
