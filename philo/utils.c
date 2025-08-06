@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:03:42 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 19:56:30 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,18 @@ long long	get_time_ms(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	ft_usleep(long ms)
+void	ft_usleep(long long ms)
 {
-	usleep(ms * 1000);
+	long long	start_time;
+	long long	current_time;
+
+	start_time = get_time_ms();
+	current_time = start_time;
+	while ((current_time - start_time) < ms)
+	{
+		usleep(100);
+		current_time = get_time_ms();
+	}
 }
 
 void	clean_up_data(t_data *data)
