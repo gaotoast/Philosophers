@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 22:53:42 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:09:17 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void	*philo_routine(void *arg)
 		}
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		if (philo_eat(philo) < 0)
-			break;
+			break ;
 		if (philo_sleep(philo) < 0)
-			break;
+			break ;
 		if (philo_think(philo) < 0)
-			break;
+			break ;
 	}
 	return (NULL);
 }
