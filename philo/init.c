@@ -6,11 +6,31 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 15:50:15 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:13:40 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	parse_args(t_data *data, int argc, char **argv)
+{
+	data->n_of_philos = str_to_long(argv[1]);
+	data->time_to_die = str_to_long(argv[2]);
+	data->time_to_eat = str_to_long(argv[3]);
+	data->time_to_sleep = str_to_long(argv[4]);
+	if (argc == 6)
+		data->must_eat_count = str_to_long(argv[5]);
+	else
+		data->must_eat_count = -1;
+	if (data->n_of_philos < 1 || data->time_to_die <= 0
+		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0
+		|| data->must_eat_count == 0)
+	{
+		write(STDERR_FILENO, "Error: Invalid argument values\n", 31);
+		return (-1);
+	}
+	return (0);
+}
 
 static int	init_mutexes(t_data *data)
 {
@@ -38,7 +58,6 @@ static int	init_mutexes(t_data *data)
 
 static int	init_data(t_data *data, int argc, char **argv)
 {
-	memset(data, 0, sizeof(t_data));
 	if (parse_args(data, argc, argv) < 0)
 		return (-1);
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
@@ -49,6 +68,9 @@ static int	init_data(t_data *data, int argc, char **argv)
 		return (-1);
 	data->end_flag = 0;
 	data->current_turn = TURN_ODD;
+	data->odd_done = 0;
+	data->even_done = 0;
+	data->last_done = 0;
 	return (0);
 }
 
@@ -66,7 +88,7 @@ static int	init_philos(t_data *data)
 		data->philos[i].left_fork = &(data->forks[i]);
 		data->philos[i].right_fork = &(data->forks[(i + 1)
 				% data->n_of_philos]);
-		data->philos[i].last_meal_time = LLONG_MAX;
+		data->philos[i].last_meal_time = 0;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].data = data;
 		i++;
@@ -76,6 +98,7 @@ static int	init_philos(t_data *data)
 
 int	init(t_data *data, int argc, char **argv)
 {
+	memset(data, 0, sizeof(t_data));
 	if (init_data(data, argc, argv) < 0 || init_philos(data) < 0)
 	{
 		clean_up_data(data);

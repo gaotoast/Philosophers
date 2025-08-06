@@ -6,13 +6,13 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 15:54:56 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:30:12 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	is_philo_dead(t_data *data, int i)
+int	check_philo_death(t_data *data, int i)
 {
 	long long	current_time;
 
@@ -33,7 +33,7 @@ int	is_philo_dead(t_data *data, int i)
 	return (0);
 }
 
-void	check_simulate_end(t_data *data)
+void	monitor_simulation(t_data *data)
 {
 	int	i;
 	int	all_ate_enough;
@@ -44,7 +44,7 @@ void	check_simulate_end(t_data *data)
 		all_ate_enough = 1;
 		while (i < data->n_of_philos)
 		{
-			if (is_philo_dead(data, i))
+			if (check_philo_death(data, i))
 				return ;
 			if (data->must_eat_count > 0
 				&& data->philos[i].meals_eaten < data->must_eat_count)
@@ -96,7 +96,7 @@ int	simulate(t_data *data)
 	}
 	if (create_threads(data) < 0)
 		return (-1);
-	check_simulate_end(data);
+	monitor_simulation(data);
 	i = 0;
 	while (i < data->n_of_philos)
 	{

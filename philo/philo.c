@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 15:48:04 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:32:52 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	philo_eat(t_philo *philo)
 		return (-1);
 	philo->last_meal_time = get_time_ms();
 	philo->meals_eaten++;
+	pthread_mutex_lock(&(philo->data->monitor_mutex));
 	print_state(philo->id, philo->data, MSG_EAT);
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -61,8 +63,8 @@ int	philo_sleep(t_philo *philo)
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
 	}
-	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	print_state(philo->id, philo->data, MSG_SLEEP);
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	ft_usleep(philo->data->time_to_sleep);
 	return (0);
 }
@@ -75,8 +77,8 @@ int	philo_think(t_philo *philo)
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
 	}
-	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	print_state(philo->id, philo->data, MSG_THINK);
+	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	return (0);
 }
 
