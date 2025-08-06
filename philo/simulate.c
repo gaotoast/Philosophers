@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:43:31 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:38:25 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_philo_death(t_data *data, int i)
 	return (0);
 }
 
-void	monitor_simulation(t_data *data)
+int	monitor_simulation(t_data *data)
 {
 	int	i;
 	int	all_ate_enough;
@@ -49,7 +49,7 @@ void	monitor_simulation(t_data *data)
 		while (i < data->n_of_philos)
 		{
 			if (check_philo_death(data, i))
-				return ;
+				return (1);
 			pthread_mutex_lock(&(data->philos[i].meal_mutex));
 			if (data->must_eat_count > 0
 				&& data->philos[i].meals_eaten < data->must_eat_count)
@@ -62,10 +62,11 @@ void	monitor_simulation(t_data *data)
 			pthread_mutex_lock(&(data->monitor_mutex));
 			data->end_flag = 1;
 			pthread_mutex_unlock(&(data->monitor_mutex));
-			return ;
+			return (0);
 		}
 		usleep(100);
 	}
+	return (0);
 }
 
 int	create_threads(t_data *data)
@@ -90,6 +91,7 @@ int	create_threads(t_data *data)
 int	simulate(t_data *data)
 {
 	int			i;
+	int			ret;
 	long long	current_time;
 
 	current_time = get_time_ms();
@@ -102,12 +104,12 @@ int	simulate(t_data *data)
 	}
 	if (create_threads(data) < 0)
 		return (-1);
-	monitor_simulation(data);
+	ret = monitor_simulation(data);
 	i = 0;
 	while (i < data->n_of_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
-	return (0);
+	return (ret);
 }
