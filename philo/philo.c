@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 15:19:51 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:48:04 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	philo_take_forks(t_philo *philo)
 			return (-1);
 		}
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
-		ft_usleep(1);
+		usleep(100);
 	}
 	pthread_mutex_lock(philo->left_fork);
 	print_state(philo->id, philo->data, MSG_TAKE);
@@ -44,6 +44,7 @@ int	philo_eat(t_philo *philo)
 	if (philo_take_forks(philo) < 0)
 		return (-1);
 	philo->last_meal_time = get_time_ms();
+	philo->meals_eaten++;
 	print_state(philo->id, philo->data, MSG_EAT);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->left_fork);

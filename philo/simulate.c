@@ -6,52 +6,101 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:38:31 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:54:56 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	create_threads(t_data *data, int *i)
+int	is_philo_dead(t_data *data, int i)
 {
-	while (*i < data->n_of_philos)
+	long long	current_time;
+
+	current_time = get_time_ms();
+	if ((current_time - data->philos[i].last_meal_time) >= data->time_to_die)
 	{
-		if (pthread_create(&(data->philos[*i].thread), NULL, philo_routine,
-				(void *)&(data->philos[*i])) != 0)
+		pthread_mutex_lock(&(data->monitor_mutex));
+		if (!data->end_flag)
 		{
-			while (--(*i) >= 0)
-				pthread_detach(data->philos[*i].thread);
+			print_state(data->philos[i].id, data, MSG_DIED);
+			data->end_flag = 1;
+			pthread_mutex_unlock(&(data->monitor_mutex));
+			return (1);
+		}
+		pthread_mutex_unlock(&(data->monitor_mutex));
+		return (1);
+	}
+	return (0);
+}
+
+void	check_simulate_end(t_data *data)
+{
+	int	i;
+	int	all_ate_enough;
+
+	while (1)
+	{
+		i = 0;
+		all_ate_enough = 1;
+		while (i < data->n_of_philos)
+		{
+			if (is_philo_dead(data, i))
+				return ;
+			if (data->must_eat_count > 0
+				&& data->philos[i].meals_eaten < data->must_eat_count)
+				all_ate_enough = 0;
+			i++;
+		}
+		if (data->must_eat_count > 0 && all_ate_enough)
+		{
+			pthread_mutex_lock(&(data->monitor_mutex));
+			data->end_flag = 1;
+			pthread_mutex_unlock(&(data->monitor_mutex));
+			return ;
+		}
+		usleep(100);
+	}
+}
+
+int	create_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->n_of_philos)
+	{
+		if (pthread_create(&(data->philos[i].thread), NULL, philo_routine,
+				(void *)&(data->philos[i])) != 0)
+		{
+			while (--(i) >= 0)
+				pthread_detach(data->philos[i].thread);
 			return (-1);
 		}
-		if (pthread_create(&(data->philos[*i].monitor_thread), NULL,
-				monitor_routine, (void *)&(data->philos[*i])) != 0)
-		{
-			pthread_detach(data->philos[*i].thread);
-			while (--(*i) >= 0)
-			{
-				pthread_detach(data->philos[*i].thread);
-				pthread_detach(data->philos[*i].monitor_thread);
-			}
-			return (-1);
-		}
-		(*i)++;
+		i++;
 	}
 	return (0);
 }
 
 int	simulate(t_data *data)
 {
-	int	i;
+	int			i;
+	long long	current_time;
 
-	data->start_time = get_time_ms();
+	current_time = get_time_ms();
+	data->start_time = current_time;
 	i = 0;
-	if (create_threads(data, &i) < 0)
+	while (i < data->n_of_philos)
+	{
+		data->philos[i].last_meal_time = current_time;
+		i++;
+	}
+	if (create_threads(data) < 0)
 		return (-1);
+	check_simulate_end(data);
 	i = 0;
 	while (i < data->n_of_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
-		pthread_join(data->philos[i].monitor_thread, NULL);
 		i++;
 	}
 	return (0);
