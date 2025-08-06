@@ -6,25 +6,14 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:45:59 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:42:23 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	philo_take_forks(t_philo *philo)
+void	philo_take_forks(t_philo *philo)
 {
-	while (!is_my_turn(philo->id, philo->data))
-	{
-		pthread_mutex_lock(&(philo->data->monitor_mutex));
-		if (philo->data->end_flag)
-		{
-			pthread_mutex_unlock(&(philo->data->monitor_mutex));
-			return (-1);
-		}
-		pthread_mutex_unlock(&(philo->data->monitor_mutex));
-		usleep(100);
-	}
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -39,20 +28,22 @@ int	philo_take_forks(t_philo *philo)
 		pthread_mutex_lock(philo->left_fork);
 		print_state(philo->id, philo->data, MSG_TAKE);
 	}
-	return (0);
 }
 
 int	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->end_flag)
+	while (!is_my_turn(philo->id, philo->data))
 	{
+		pthread_mutex_lock(&(philo->data->monitor_mutex));
+		if (philo->data->end_flag)
+		{
+			pthread_mutex_unlock(&(philo->data->monitor_mutex));
+			return (-1);
+		}
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
-		return (-1);
+		usleep(100);
 	}
-	pthread_mutex_unlock(&(philo->data->monitor_mutex));
-	if (philo_take_forks(philo) < 0)
-		return (-1);
+	philo_take_forks(philo);
 	pthread_mutex_lock(&(philo->meal_mutex));
 	philo->last_meal_time = get_time_ms();
 	philo->meals_eaten++;
