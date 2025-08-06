@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:26:40 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:09:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->is_game_over)
+	if (philo->data->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
@@ -31,7 +31,7 @@ int	philo_eat(t_philo *philo)
 int	philo_sleep(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->is_game_over)
+	if (philo->data->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
@@ -45,7 +45,7 @@ int	philo_sleep(t_philo *philo)
 int	philo_think(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->is_game_over)
+	if (philo->data->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
@@ -60,18 +60,21 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	while (!philo->data->is_game_over)
+	while (1)
 	{
+		pthread_mutex_lock(&(philo->data->monitor_mutex));
+		if (philo->data->end_flag)
+		{
+			pthread_mutex_unlock(&(philo->data->monitor_mutex));
+			return (NULL);
+		}
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		if (philo_eat(philo) < 0)
-			return (NULL);
+			break ;
 		if (philo_sleep(philo) < 0)
-			return (NULL);
+			break ;
 		if (philo_think(philo) < 0)
-			return (NULL);
-		pthread_mutex_lock(&(philo->data->monitor_mutex));
+			break ;
 	}
-	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	return (NULL);
 }
