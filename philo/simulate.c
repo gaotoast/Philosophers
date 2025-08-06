@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 17:38:25 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:44:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ int	check_philo_death(t_data *data, int i)
 	return (0);
 }
 
+int	check_all_ate_enough(t_data *data, int ate_flag)
+{
+	if (data->must_eat_count > 0 && ate_flag)
+	{
+		pthread_mutex_lock(&(data->monitor_mutex));
+		data->end_flag = 1;
+		pthread_mutex_unlock(&(data->monitor_mutex));
+		return (1);
+	}
+	return (0);
+}
+
 int	monitor_simulation(t_data *data)
 {
 	int	i;
@@ -57,13 +69,8 @@ int	monitor_simulation(t_data *data)
 			pthread_mutex_unlock(&(data->philos[i].meal_mutex));
 			i++;
 		}
-		if (data->must_eat_count > 0 && all_ate_enough)
-		{
-			pthread_mutex_lock(&(data->monitor_mutex));
-			data->end_flag = 1;
-			pthread_mutex_unlock(&(data->monitor_mutex));
+		if (check_all_ate_enough(data, all_ate_enough))
 			return (0);
-		}
 		usleep(100);
 	}
 	return (0);
