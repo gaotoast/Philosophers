@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 14:09:17 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:09:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->is_game_over)
+	if (philo->data->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
@@ -31,7 +31,7 @@ int	philo_eat(t_philo *philo)
 int	philo_sleep(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->is_game_over)
+	if (philo->data->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
@@ -45,7 +45,7 @@ int	philo_sleep(t_philo *philo)
 int	philo_think(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
-	if (philo->data->is_game_over)
+	if (philo->data->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		return (-1);
@@ -63,7 +63,7 @@ void	*philo_routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->data->monitor_mutex));
-		if (philo->data->is_game_over)
+		if (philo->data->end_flag)
 		{
 			pthread_mutex_unlock(&(philo->data->monitor_mutex));
 			return (NULL);

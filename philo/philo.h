@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 19:26:38 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:09:50 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_data
 	long				time_to_sleep;
 	long				must_eat_count;
 	long long			start_time;
-	int					is_game_over;
+	int					end_flag;
 	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		monitor_mutex;
 	t_philo				*philos;
