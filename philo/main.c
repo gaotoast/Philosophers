@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:13:45 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/05 17:56:12 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:39:37 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 		return (1);
 	ret = simulate(&data);
 	clean_up_data(&data);
-	if (ret < 0)
+	if (ret != 0)
 		return (1);
 	return (0);
 }
