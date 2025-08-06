@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:39:46 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 19:50:00 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void					report_turn_done(int philo_id, t_data *data);
 // utils
 long					str_to_long(const char *nptr);
 long long				get_time_ms(void);
-void					ft_usleep(long ms);
+void					ft_usleep(long long ms);
 void					clean_up_data(t_data *data);
 
 #endif
