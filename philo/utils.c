@@ -70,5 +70,13 @@ void	clean_up_data(t_data *data)
 		pthread_mutex_destroy(&(data->turn_mutex));
 	}
 	if (data->philos)
+	{
+		i = 0;
+		while (i < data->n_of_philos)
+		{
+			pthread_mutex_destroy(&(data->philos[i].meal_mutex));
+			i++;
+		}
 		free(data->philos);
+	}
 }
