@@ -19,12 +19,18 @@ static int	parse_args(t_data *data, int argc, char **argv)
 	data->time_to_eat = str_to_long(argv[3]);
 	data->time_to_sleep = str_to_long(argv[4]);
 	if (argc == 6)
+	{
 		data->must_eat_count = str_to_long(argv[5]);
+		if (data->must_eat_count <= 0)
+		{
+			write(STDERR_FILENO, "Error: Invalid argument values\n", 31);
+			return (-1);
+		}
+	}
 	else
 		data->must_eat_count = -1;
 	if (data->n_of_philos < 1 || data->time_to_die <= 0
-		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0
-		|| data->must_eat_count == 0)
+		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0)
 	{
 		write(STDERR_FILENO, "Error: Invalid argument values\n", 31);
 		return (-1);
