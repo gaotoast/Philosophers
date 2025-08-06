@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 14:09:50 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:42:23 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	init_mutexes(t_data *data)
 		i++;
 	}
 	if (pthread_mutex_init(&(data->print_mutex), NULL) != 0
-		|| pthread_mutex_init(&(data->monitor_mutex), NULL) != 0)
+		|| pthread_mutex_init(&(data->monitor_mutex), NULL) != 0
+		|| pthread_mutex_init(&(data->turn_mutex), NULL) != 0)
 		return (-1);
 	return (0);
 }
@@ -47,6 +48,7 @@ static int	init_data(t_data *data, int argc, char **argv)
 	if (init_mutexes(data) < 0)
 		return (-1);
 	data->end_flag = 0;
+	data->current_turn = TURN_ODD;
 	return (0);
 }
 

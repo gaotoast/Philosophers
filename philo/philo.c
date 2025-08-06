@@ -6,13 +6,32 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 14:09:50 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:19:51 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// TODO: take forks
+int	philo_take_forks(t_philo *philo)
+{
+	while (!is_my_turn(philo->id, philo->data))
+	{
+		pthread_mutex_lock(&(philo->data->monitor_mutex));
+		if (philo->data->end_flag)
+		{
+			pthread_mutex_unlock(&(philo->data->monitor_mutex));
+			return (-1);
+		}
+		pthread_mutex_unlock(&(philo->data->monitor_mutex));
+		ft_usleep(1);
+	}
+	pthread_mutex_lock(philo->left_fork);
+	print_state(philo->id, philo->data, MSG_TAKE);
+	pthread_mutex_lock(philo->right_fork);
+	print_state(philo->id, philo->data, MSG_TAKE);
+	return (0);
+}
+
 int	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
@@ -22,9 +41,14 @@ int	philo_eat(t_philo *philo)
 		return (-1);
 	}
 	pthread_mutex_unlock(&(philo->data->monitor_mutex));
+	if (philo_take_forks(philo) < 0)
+		return (-1);
 	philo->last_meal_time = get_time_ms();
 	print_state(philo->id, philo->data, MSG_EAT);
 	ft_usleep(philo->data->time_to_eat);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	report_turn_done(philo->id, philo->data);
 	return (0);
 }
 
