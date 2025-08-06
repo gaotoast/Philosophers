@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 17:44:50 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:51:47 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ int	monitor_simulation(t_data *data)
 		{
 			if (check_philo_death(data, i))
 				return (1);
-			pthread_mutex_lock(&(data->philos[i].meal_mutex));
-			if (data->must_eat_count > 0
-				&& data->philos[i].meals_eaten < data->must_eat_count)
-				all_ate_enough = 0;
-			pthread_mutex_unlock(&(data->philos[i].meal_mutex));
+			if (data->must_eat_count > 0)
+			{
+				pthread_mutex_lock(&(data->philos[i].meal_mutex));
+				if (data->philos[i].meals_eaten < data->must_eat_count)
+					all_ate_enough = 0;
+				pthread_mutex_unlock(&(data->philos[i].meal_mutex));
+			}
 			i++;
 		}
 		if (check_all_ate_enough(data, all_ate_enough))
