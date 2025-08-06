@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:12:51 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:39:46 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_philo
 	pthread_t			thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		meal_mutex;
 	long long			last_meal_time;
 	long				meals_eaten;
 	t_data				*data;

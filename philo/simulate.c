@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:30:12 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:43:31 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 int	check_philo_death(t_data *data, int i)
 {
 	long long	current_time;
+	long long	last_meal_time;
 
 	current_time = get_time_ms();
-	if ((current_time - data->philos[i].last_meal_time) >= data->time_to_die)
+	pthread_mutex_lock(&(data->philos[i].meal_mutex));
+	last_meal_time = data->philos[i].last_meal_time;
+	pthread_mutex_unlock(&(data->philos[i].meal_mutex));
+	if ((current_time - last_meal_time) >= data->time_to_die)
 	{
 		pthread_mutex_lock(&(data->monitor_mutex));
 		if (!data->end_flag)
@@ -46,9 +50,11 @@ void	monitor_simulation(t_data *data)
 		{
 			if (check_philo_death(data, i))
 				return ;
+			pthread_mutex_lock(&(data->philos[i].meal_mutex));
 			if (data->must_eat_count > 0
 				&& data->philos[i].meals_eaten < data->must_eat_count)
 				all_ate_enough = 0;
+			pthread_mutex_unlock(&(data->philos[i].meal_mutex));
 			i++;
 		}
 		if (data->must_eat_count > 0 && all_ate_enough)

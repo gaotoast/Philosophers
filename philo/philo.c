@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:32:52 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:45:59 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,20 @@ int	philo_take_forks(t_philo *philo)
 		pthread_mutex_unlock(&(philo->data->monitor_mutex));
 		usleep(100);
 	}
-	pthread_mutex_lock(philo->left_fork);
-	print_state(philo->id, philo->data, MSG_TAKE);
-	pthread_mutex_lock(philo->right_fork);
-	print_state(philo->id, philo->data, MSG_TAKE);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_state(philo->id, philo->data, MSG_TAKE);
+		pthread_mutex_lock(philo->right_fork);
+		print_state(philo->id, philo->data, MSG_TAKE);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_state(philo->id, philo->data, MSG_TAKE);
+		pthread_mutex_lock(philo->left_fork);
+		print_state(philo->id, philo->data, MSG_TAKE);
+	}
 	return (0);
 }
 
@@ -43,8 +53,10 @@ int	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(&(philo->data->monitor_mutex));
 	if (philo_take_forks(philo) < 0)
 		return (-1);
+	pthread_mutex_lock(&(philo->meal_mutex));
 	philo->last_meal_time = get_time_ms();
 	philo->meals_eaten++;
+	pthread_mutex_unlock(&(philo->meal_mutex));
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
 	print_state(philo->id, philo->data, MSG_EAT);
 	pthread_mutex_unlock(&(philo->data->monitor_mutex));

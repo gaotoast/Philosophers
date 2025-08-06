@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 16:13:40 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:41:47 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ static int	init_philos(t_data *data)
 		data->philos[i].last_meal_time = 0;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].data = data;
+		if (pthread_mutex_init(&(data->philos[i].meal_mutex), NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&(data->forks[i]));
+			free(data->philos);
+			data->philos = NULL;
+			return (-1);
+		}
 		i++;
 	}
 	return (0);
