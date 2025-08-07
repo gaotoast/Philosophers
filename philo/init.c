@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 18:36:52 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:41:10 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ static int	init_philos(t_data *data)
 	{
 		data->philos[i].id = i + 1;
 		data->philos[i].left_fork = &(data->forks[i]);
-		data->philos[i].right_fork = &(data->forks[(i + 1)
-				% data->n_of_philos]);
+		if (data->n_of_philos > 1)
+			data->philos[i].right_fork = &(data->forks[(i + 1)
+					% data->n_of_philos]);
 		data->philos[i].last_meal_time = 0;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].data = data;
