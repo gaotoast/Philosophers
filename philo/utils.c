@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 19:00:19 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:21:54 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_state(int philo_id, t_data *data, char *msg)
 		return ;
 	pthread_mutex_lock(&(data->print_mutex));
 	timestamp = get_time_ms() - data->start_time;
-	printf("%lld %d %s\n", timestamp, philo_id, msg);
+	printf("%ld %d %s\n", timestamp, philo_id, msg);
 	pthread_mutex_unlock(&(data->print_mutex));
 }
 

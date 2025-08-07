@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 18:41:43 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:22:11 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdint.h>
 
 # define MSG_TAKE "has taken a fork"
 # define MSG_EAT "is eating"
