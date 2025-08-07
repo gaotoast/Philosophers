@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 18:05:46 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:34:08 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ static int	init_data(t_data *data, int argc, char **argv)
 		return (-1);
 	if (init_philos(data) < 0)
 		return (-1);
+	data->start_time = 0;
 	data->end_flag = 0;
 	data->current_turn = TURN_ODD;
 	data->odd_done = 0;

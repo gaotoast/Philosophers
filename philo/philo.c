@@ -6,13 +6,13 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 18:41:59 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:43:14 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_take_forks(t_philo *philo)
+static void	philo_take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
@@ -30,7 +30,7 @@ void	philo_take_forks(t_philo *philo)
 	}
 }
 
-int	philo_eat(t_philo *philo)
+static int	philo_eat(t_philo *philo)
 {
 	while (!is_my_turn(philo->id, philo->data))
 	{
@@ -58,7 +58,7 @@ int	philo_eat(t_philo *philo)
 	return (0);
 }
 
-int	philo_sleep(t_philo *philo)
+static int	philo_sleep(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
 	if (philo->data->end_flag)
@@ -72,7 +72,7 @@ int	philo_sleep(t_philo *philo)
 	return (0);
 }
 
-int	philo_think(t_philo *philo)
+static int	philo_think(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
 	if (philo->data->end_flag)
