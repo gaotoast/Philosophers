@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 18:37:22 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:25:21 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	check_philo_death(t_data *data, int i)
 {
-	long long	current_time;
-	long long	last_meal_time;
+	int64_t	current_time;
+	int64_t	last_meal_time;
 
 	current_time = get_time_ms();
 	pthread_mutex_lock(&(data->philos[i].meal_mutex));
@@ -99,9 +99,9 @@ int	create_threads(t_data *data)
 
 int	simulate(t_data *data)
 {
-	int			i;
-	int			ret;
-	long long	current_time;
+	int		i;
+	int		ret;
+	int64_t	current_time;
 
 	current_time = get_time_ms();
 	data->start_time = current_time;

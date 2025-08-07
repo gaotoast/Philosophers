@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 17:56:12 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:24:48 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,32 @@ typedef enum s_turn
 
 typedef struct s_philo
 {
-	int					id;
+	int64_t				id;
 	pthread_t			thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		meal_mutex;
-	long long			last_meal_time;
-	long				meals_eaten;
+	int64_t				last_meal_time;
+	int64_t				meals_eaten;
 	t_data				*data;
 }						t_philo;
 
 typedef struct s_data
 {
-	long				n_of_philos;
-	long				time_to_die;
-	long				time_to_eat;
-	long				time_to_sleep;
-	long				must_eat_count;
-	long long			start_time;
+	int64_t				n_of_philos;
+	int64_t				time_to_die;
+	int64_t				time_to_eat;
+	int64_t				time_to_sleep;
+	int64_t				must_eat_count;
+	int64_t				start_time;
 	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		monitor_mutex;
 	int					end_flag;
 	pthread_mutex_t		turn_mutex;
 	t_turn				current_turn;
-	long				odd_done;
-	long				even_done;
-	long				last_done;
+	int64_t				odd_done;
+	int64_t				even_done;
+	int64_t				last_done;
 	t_philo				*philos;
 	pthread_mutex_t		*forks;
 }						t_data;
@@ -84,9 +84,9 @@ int						is_my_turn(int philo_id, t_data *data);
 void					report_turn_done(int philo_id, t_data *data);
 
 // utils
-long					str_to_long(const char *nptr);
-long long				get_time_ms(void);
-void					ft_usleep(long long ms);
+int64_t					str_to_int64(const char *nptr);
+int64_t					get_time_ms(void);
+void					ft_usleep(int64_t ms);
 int						handle_single_philo(t_philo *philo);
 
 // clean_up
