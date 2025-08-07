@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 17:42:23 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:52:58 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (handle_single_philo(philo))
+		return (NULL);
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->data->monitor_mutex));

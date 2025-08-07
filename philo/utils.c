@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/06 19:56:30 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:54:28 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,12 @@ void	ft_usleep(long long ms)
 	}
 }
 
-void	clean_up_data(t_data *data)
+int	handle_single_philo(t_philo *philo)
 {
-	int	i;
-
-	if (data->forks)
-	{
-		i = 0;
-		while (i < data->n_of_philos)
-		{
-			pthread_mutex_destroy(&(data->forks[i]));
-			i++;
-		}
-		free(data->forks);
-		pthread_mutex_destroy(&(data->print_mutex));
-		pthread_mutex_destroy(&(data->monitor_mutex));
-		pthread_mutex_destroy(&(data->turn_mutex));
-	}
-	if (data->philos)
-	{
-		i = 0;
-		while (i < data->n_of_philos)
-		{
-			pthread_mutex_destroy(&(data->philos[i].meal_mutex));
-			i++;
-		}
-		free(data->philos);
-	}
+	if (philo->data->n_of_philos != 1)
+		return (0);
+	pthread_mutex_lock(philo->left_fork);
+	print_state(philo->id, philo->data, MSG_TAKE);
+	pthread_mutex_unlock(philo->left_fork);
+	return (1);
 }
