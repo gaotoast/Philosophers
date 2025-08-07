@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:37:42 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 17:52:58 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:41:59 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	philo_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->monitor_mutex));
 	print_state(philo->id, philo->data, MSG_EAT);
 	pthread_mutex_unlock(&(philo->data->monitor_mutex));
-	ft_usleep(philo->data->time_to_eat);
+	ft_usleep(philo->data->time_to_eat, philo->data);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	report_turn_done(philo->id, philo->data);
@@ -68,7 +68,7 @@ int	philo_sleep(t_philo *philo)
 	}
 	print_state(philo->id, philo->data, MSG_SLEEP);
 	pthread_mutex_unlock(&(philo->data->monitor_mutex));
-	ft_usleep(philo->data->time_to_sleep);
+	ft_usleep(philo->data->time_to_sleep, philo->data);
 	return (0);
 }
 

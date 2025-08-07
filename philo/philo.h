@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 18:24:48 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:41:43 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void					report_turn_done(int philo_id, t_data *data);
 // utils
 int64_t					str_to_int64(const char *nptr);
 int64_t					get_time_ms(void);
-void					ft_usleep(int64_t ms);
+void					ft_usleep(int64_t ms, t_data *data);
 int						handle_single_philo(t_philo *philo);
 
 // clean_up
