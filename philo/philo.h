@@ -6,14 +6,13 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 20:22:11 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:23:53 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
