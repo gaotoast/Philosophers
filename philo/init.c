@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:01 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 17:57:58 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:05:46 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static int	parse_args(t_data *data, int argc, char **argv)
 {
-	data->n_of_philos = str_to_long(argv[1]);
-	data->time_to_die = str_to_long(argv[2]);
-	data->time_to_eat = str_to_long(argv[3]);
-	data->time_to_sleep = str_to_long(argv[4]);
+	data->n_of_philos = str_to_int64(argv[1]);
+	data->time_to_die = str_to_int64(argv[2]);
+	data->time_to_eat = str_to_int64(argv[3]);
+	data->time_to_sleep = str_to_int64(argv[4]);
 	if (argc == 6)
 	{
-		data->must_eat_count = str_to_long(argv[5]);
+		data->must_eat_count = str_to_int64(argv[5]);
 		if (data->must_eat_count <= 0)
 		{
 			write(STDERR_FILENO, "Error: Invalid argument values\n", 31);

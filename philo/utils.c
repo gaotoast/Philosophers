@@ -6,20 +6,20 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 14:05:24 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 17:54:28 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:25:00 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	str_to_long(const char *nptr)
+int64_t	str_to_int64(const char *nptr)
 {
-	long	result;
+	int64_t	result;
 
 	result = 0;
 	while (*nptr >= '0' && *nptr <= '9')
 	{
-		if (result > (LONG_MAX - (*nptr - '0')) / 10)
+		if (result > (INT64_MAX - (*nptr - '0')) / 10)
 			return (-1);
 		result = result * 10 + (*nptr - '0');
 		nptr++;
@@ -29,7 +29,7 @@ long	str_to_long(const char *nptr)
 
 void	print_state(int philo_id, t_data *data, char *msg)
 {
-	long long	timestamp;
+	int64_t	timestamp;
 
 	if (data->end_flag)
 		return ;
@@ -39,7 +39,7 @@ void	print_state(int philo_id, t_data *data, char *msg)
 	pthread_mutex_unlock(&(data->print_mutex));
 }
 
-long long	get_time_ms(void)
+int64_t	get_time_ms(void)
 {
 	struct timeval	tv;
 
@@ -47,10 +47,10 @@ long long	get_time_ms(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	ft_usleep(long long ms)
+void	ft_usleep(int64_t ms)
 {
-	long long	start_time;
-	long long	current_time;
+	int64_t	start_time;
+	int64_t	current_time;
 
 	start_time = get_time_ms();
 	current_time = start_time;
