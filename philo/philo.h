@@ -6,7 +6,7 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:20:29 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 20:23:53 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:43:41 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int						check_args(int argc, char **argv);
 
 // simulate
 int						simulate(t_data *data);
-void					print_state(int id, t_data *data, char *msg);
 
 // philo
 void					*philo_routine(void *arg);
@@ -85,6 +84,7 @@ void					report_turn_done(int philo_id, t_data *data);
 
 // utils
 int64_t					str_to_int64(const char *nptr);
+void					print_state(int id, t_data *data, char *msg);
 int64_t					get_time_ms(void);
 void					ft_usleep(int64_t ms, t_data *data);
 int						handle_single_philo(t_philo *philo);

@@ -6,13 +6,13 @@
 /*   By: stakada <stakada@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:43:02 by stakada           #+#    #+#             */
-/*   Updated: 2025/08/07 18:25:21 by stakada          ###   ########.fr       */
+/*   Updated: 2025/08/07 20:43:35 by stakada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_philo_death(t_data *data, int i)
+static int	check_philo_death(t_data *data, int i)
 {
 	int64_t	current_time;
 	int64_t	last_meal_time;
@@ -37,7 +37,7 @@ int	check_philo_death(t_data *data, int i)
 	return (0);
 }
 
-int	check_all_ate_enough(t_data *data, int ate_flag)
+static int	check_all_ate_enough(t_data *data, int ate_flag)
 {
 	if (data->must_eat_count > 0 && ate_flag)
 	{
@@ -49,7 +49,7 @@ int	check_all_ate_enough(t_data *data, int ate_flag)
 	return (0);
 }
 
-int	monitor_simulation(t_data *data)
+static int	monitor_simulation(t_data *data)
 {
 	int	i;
 	int	all_ate_enough;
@@ -78,7 +78,7 @@ int	monitor_simulation(t_data *data)
 	return (0);
 }
 
-int	create_threads(t_data *data)
+static int	create_threads(t_data *data)
 {
 	int	i;
 
@@ -112,7 +112,10 @@ int	simulate(t_data *data)
 		i++;
 	}
 	if (create_threads(data) < 0)
+	{
+		write(STDERR_FILENO, "Error: Failed to create philo threads\n", 38);
 		return (-1);
+	}
 	ret = monitor_simulation(data);
 	i = 0;
 	while (i < data->n_of_philos)
